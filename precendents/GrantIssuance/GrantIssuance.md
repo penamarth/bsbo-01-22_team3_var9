@@ -127,7 +127,7 @@
 
 ---
 
-## Связь с диаграммой классов
+## Связь
 
 1. **ApplicationManager**
    - Используется для управления заявками (`getApplicationByID`, `updateApplication`).

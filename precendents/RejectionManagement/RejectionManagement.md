@@ -113,7 +113,7 @@
 
 ---
 
-## Связь с диаграммой
+## Связь
 1. **ApplicationManager**: используется для управления данными заявок (`getApplicationByID`, `updateApplication`).
 2. **ExpertiseManager**: предоставляет доступ к оценкам через `getEvaluation`.
 3. **DecisionManager**: обрабатывает создание и хранение решений (`makeDecision`, `reviewDecision`).
