@@ -9,6 +9,14 @@ skinparam packageBackgroundColor LightBlue
 skinparam packageBorderColor Black
 
 ' --- Интерфейсы ---
+
+interface IAuthManager {
+  +register(user: User): UUID
+  +login(email: String, password: String): String
+  +logout(userID: UUID): void
+  +validateSession(sessionToken: String): User
+}
+
 interface IApplicationManager {
   +submitApplication(application: Application): UUID
   +updateApplication(applicationID: UUID, updatedApplication: Application): void
@@ -55,6 +63,9 @@ class GrantSystemFacade {
   +makeDecision(applicationID: UUID, decision: Decision): void
   +sendNotification(notification: Notification): void
   +generateReport(reportType: String, parameters: Map<String, Object>): Report
+  +register(user: User): UUID
+  +login(email: String, password: String): String
+  +logout(userID: UUID): void
 }
 
 ' --- Основные классы ---
@@ -97,12 +108,21 @@ class ReportManager implements IReportManager {
   +getReportByID(reportID: UUID): Report
 }
 
+class AuthManager implements IAuthManager {
+  +Sessions: Map<String, User>
+  +register(user: User): UUID
+  +login(email: String, password: String): String
+  +logout(userID: UUID): void
+  +validateSession(sessionToken: String): User
+}
+
 ' --- Пользователи ---
 class User {
   +ID: UUID
   +Name: String
   +Email: String
   +Role: String
+  +Password: String [encrypted]
 }
 
 class Applicant {
@@ -170,13 +190,16 @@ GrantSystemFacade o-- IDecisionManager
 GrantSystemFacade o-- INotificationManager
 GrantSystemFacade o-- IPaymentManager
 GrantSystemFacade o-- IReportManager
+GrantSystemFacade o-- IAuthManager
 
+Applicant --> IApplicationManager : submits application
 ApplicationManager o-- Application : manages >
 ExpertiseManager o-- Evaluation : manages >
 DecisionManager o-- Decision : manages >
 NotificationManager o-- Notification : manages >
 PaymentManager o-- Payment : manages >
 ReportManager o-- Report : manages >
+AuthManager o-- User : manages sessions
 
 User "1" -- "*" Application : submits >
 Expert "1" -- "*" Evaluation : performs >
