@@ -53,7 +53,7 @@
 ## Основной успешный сценарий
 
 ### 1. Заполнение формы заявки
-- Заявитель входит в систему через `UserManager::login(username, password)`.
+- Заявитель входит в систему через `AuthManager::login(email, password)`.
 - Заявитель заполняет форму заявки, включая такие поля, как:
   - `Title`: название проекта.
   - `Description`: подробное описание проекта.
@@ -65,7 +65,7 @@
   - `Title`: название проекта.
   - `Description`: подробное описание проекта.
   - `Status`: статус заявки("На рассмотрении")
-  - `Applicant`: пользователь.
+  - `Applicant`: пользователи.
 - Система передает объект `Applicant` через `ApplicationManager::submitApplication`.
 
 ### 3. Уведомление о подтверждении
@@ -103,8 +103,6 @@
 
 ## Расширения
 
-## Расширения
-
 ### 1. История поданных заявок
 - Все решения сохраняются и доступны для анализа через `ApplicationManager::getAllApplications`.
 
@@ -120,7 +118,7 @@
 ## Связь
 1. **ApplicationManager**
     - Используется для управления данными заявок (`getApplicationByID`, `validateApplication`, `submitApplication`).
-2. **UserManager** 
+2. **AuthrManager** 
     - Предоставляет функции для управления пользователями и их доступом.
 3. **NotificationManager**
     - Отправляет уведомления заявителям через `sendNotification`.
