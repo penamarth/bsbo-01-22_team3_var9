@@ -11,7 +11,7 @@ class IExpertiseManager:
     def assign_expert(self, application_id: uuid.UUID, expert_id: uuid.UUID) -> None:
         raise NotImplementedError
 
-    def evaluate_application(self, application_id: uuid.UUID, evaluation: Evaluation) -> None:
+    def evaluate_application(self, application_id: uuid.UUID, expert_id: uuid.UUID, score: float, comments: str) -> None:
         raise NotImplementedError
 
     def get_evaluation(self, application_id: uuid.UUID) -> Optional[Evaluation]:
@@ -35,12 +35,13 @@ class ExpertiseManager(IExpertiseManager):
         self.evaluations[application_id] = None  # Подготовка для оценки после назначения эксперта
         print(f"Expert {expert_id} assigned to application {application_id}")
 
-    def evaluate_application(self, application_id: uuid.UUID, evaluation: Evaluation) -> None:
+    def evaluate_application(self, application_id: uuid.UUID, expert_id: uuid.UUID, score: float, comments: str) -> None:
         """
         Оценивает заявку, только после предварительного назначения эксперта.
         """
         if application_id not in self.evaluations:
             raise Exception(f"No expert assigned to application ID {application_id}.")
+        evaluation = Evaluation(score=score, comments=comments, expert_id=expert_id)
         self.evaluations[application_id] = evaluation
         print(f"Evaluation added: {evaluation.score}, {evaluation.comments}")
 

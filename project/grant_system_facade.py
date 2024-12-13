@@ -47,8 +47,8 @@ class GrantSystemFacade:
     def assign_expert(self, application_id, expert_id):
         self.expertise_manager.assign_expert(application_id, expert_id)
 
-    def evaluate_application(self, application_id, score, comments):
-        self.expertise_manager.evaluate_application(application_id, score, comments)
+    def evaluate_application(self, application_id, expert_id, score, comments):
+        self.expertise_manager.evaluate_application(application_id, expert_id, score, comments)
 
     def get_evaluation(self, application_id):
         return self.expertise_manager.get_evaluation(application_id)
@@ -80,3 +80,9 @@ class GrantSystemFacade:
 
     def get_report_by_id(self, report_id):
         return self.report_manager.get_report_by_id(report_id)
+
+    # --- Исправление ошибки вызова метода evaluate_application в main.py ---
+    def evaluate_application(self, application_id, expert_id, score, comments):
+        if not expert_id or not comments:
+            raise ValueError("Both expert_id and comments must be provided.")
+        self.expertise_manager.evaluate_application(application_id, expert_id, score, comments)

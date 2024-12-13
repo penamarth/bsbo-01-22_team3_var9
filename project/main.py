@@ -32,10 +32,10 @@ def main():
     system.assign_expert(application_id, expert_id)
     print(f"Expert {expert_id} assigned to application {application_id}")
     
-    '''# --- 5. Оценка заявки экспертом ---
+    # --- 5. Оценка заявки экспертом ---
     score = 85.5
     comments = "Great proposal, but needs minor improvements."
-    system.evaluate_application(application_id, score, comments)  # Передаем все три аргумента
+    system.evaluate_application(application_id, expert_id, score, comments)  # Передаем все три аргумента
     evaluation = system.get_evaluation(application_id)
     print(f"Evaluation completed: {evaluation.score}, Comments: {evaluation.comments}")
     
@@ -65,7 +65,7 @@ def main():
     
     # --- 10. Завершение ---
     system.logout(applicant_id)
-    print(f"Alice logged out.")'''
+    print(f"Alice logged out.")
 
 if __name__ == "__main__":
     main()
