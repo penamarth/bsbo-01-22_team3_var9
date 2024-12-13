@@ -1,5 +1,7 @@
 import uuid
 
+from user import User
+
 
 class AuthManager:
     def __init__(self):
